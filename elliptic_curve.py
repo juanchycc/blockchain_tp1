@@ -74,3 +74,14 @@ class EllipticCurve:
             resp = self.point_addition_differents( resp, t )
 
         return resp
+
+    # g^n = I => un punto generador, elevado a la cantidad de elementos de la curva es igual al punto infinito
+    # por lo tanto si multiplo un punto generador hasta encontrar el punto inifinito encuentro n
+    # por Lagrange si n es primo, todos los puntos son generadores
+    def get_group_order( self, g ):
+        p = ()
+        i = 0
+        while p != (None,None):
+            i +=1
+            p = self.scalar_multiplication( g, i )
+        return i

@@ -28,3 +28,6 @@ class TestEllipticCurve(unittest.TestCase):
         mult = ellipticCurve.scalar_multiplication( t,k )
         print(mult)
         self.assertEqual(ellipticCurve.is_in_curve( mult ),True,"Scalar Multiplication Failed")
+
+    def test_group_order(self):
+        print( ellipticCurve.get_group_order( t ) )
