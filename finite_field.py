@@ -3,15 +3,21 @@ class FiniteField:
     def __init__(self, field_of_p):
         #TODO: chequear que el numero sea primo
         self.field_of_p = field_of_p
+        self.set = self.get_set( field_of_p )
 
-
-    def get_set( self ):
+    def get_set( self, num ):
         set = []
         for i in range( 0, self.field_of_p ):
             set.append(i)
-        print(set)
+        
+        return set
+        
+    def contains( self, num ):
+        return num in self.set
+
 
     def addition( self, num_1, num_2 ):
+        #TODO: validar que sea necesario este chequeo
         if num_1 >= self.field_of_p or num_2 >= self.field_of_p :
             return "Invalid range, field number is: " + str(self.field_of_p)
          
@@ -32,7 +38,7 @@ class FiniteField:
             return 0
 
         mult = 0
-
+        #TODO: iterar con el número más chico de los dos, como optimización
         for i in range( 0,num_2 ):
             mult = self.addition( mult, num_1 )
         return mult
@@ -40,11 +46,17 @@ class FiniteField:
     def division( self, num_1, num_2 ):
         if num_1 >= self.field_of_p or num_2 >= self.field_of_p :
             return "Invalid range, field number is: " + str(self.field_of_p)
+        if num_2 == 0:
+            return None
         
         rng = self.field_of_p - 2
-        multiplicative_inverse = num_2
 
-        for i in range(0, rng -1):
-            multiplicative_inverse = self.multiplication( multiplicative_inverse, num_2 )
+        multiplicative_inverse = self.exponential(num_2, rng )
 
         return self.multiplication( num_1, multiplicative_inverse )
+
+    def exponential( self, num, exp ):
+        result = num
+        for i in range(0, exp - 1 ):
+            result = self.multiplication( result, num )
+        return result

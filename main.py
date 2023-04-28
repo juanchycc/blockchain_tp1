@@ -1,24 +1,22 @@
 from finite_field import FiniteField
+from elliptic_curve import EllipticCurve
 
-number = 10
+'''a = -3
+b = -3
+p = 1021
 
-print("Building a finite field with p =", number)
+t = (379,1011)'''
+a = -3
+b = -3
+p = 47
 
-finite_field = FiniteField(19)
-finite_field.get_set()
+t = (17,21)
 
-'''print(finite_field.addition(20,30))
-print(finite_field.addition(2,3))
-print(finite_field.addition(5,7))
-print(finite_field.subtraction(3,1))
-print(finite_field.subtraction(5,8))
-print(finite_field.multiplication(2,2))
-print(finite_field.multiplication(7,3))
-print(finite_field.multiplication(3,6))'''
-print(finite_field.division(2,7))
-print(finite_field.division(12,19))
+ellipticCurve = EllipticCurve( a, b, p )
 
-
-
-
-
+points = set()
+points.add(t)
+for i in range( 1, p**2 - 1  ):
+    r = ellipticCurve.scalar_multiplication(t,i)
+    points.add(ellipticCurve.scalar_multiplication(t,i))
+print(len(points))
