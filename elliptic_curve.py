@@ -79,9 +79,9 @@ class EllipticCurve:
     # por lo tanto si multiplo un punto generador hasta encontrar el punto inifinito encuentro n
     # por Lagrange si n es primo, todos los puntos son generadores
     def get_group_order( self, g ):
-        p = ()
-        i = 0
+        p = self.point_duplication(g)
+        i = 2
         while p != (None,None):
+            p = self.point_addition_differents( g, p )
             i +=1
-            p = self.scalar_multiplication( g, i )
         return i
