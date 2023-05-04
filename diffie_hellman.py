@@ -6,14 +6,24 @@ class DiffieHellman:
     def __init__(self, G):
         a = 0
         b = 6
-        p = 43
-        self.curve = EllipticCurve(a, b, p)
+        self.p = 43
+        self.curve = EllipticCurve(a, b, self.p)
         self.generator = G
-        # TODO: numero primo?
-        self.private = random.randrange(0, p-1, 1)
+        self.random = 0
+        self.public = ()
+        self.private = ()
 
     def check_order(self):
         return self.curve.get_group_order(self.generator)
 
     def generate_pub_key(self):
-        return self.curve.scalar_multiplication(self.generator, self.private)
+
+        while (self.public == (None, None) or self.public == ()):
+            self.random = random.randrange(0, self.p - 1, 1)
+            self.public = self.curve.scalar_multiplication(
+                self.generator, self.random)
+        return self.public
+
+    def generate_priv_key(self, p):
+        self.private = self.curve.scalar_multiplication(p, self.random)
+        return self.private
